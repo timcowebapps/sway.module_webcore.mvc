@@ -1,20 +1,19 @@
-#ifndef _SWAY_WEBCORE_MVC_VIEW_ABSTRACTITEMVIEW_H
-#define _SWAY_WEBCORE_MVC_VIEW_ABSTRACTITEMVIEW_H
+#ifndef _SWAY_WEBCORE_MVC_COLLECTIONVIEW_H
+#define _SWAY_WEBCORE_MVC_COLLECTIONVIEW_H
 
+#include <sway/webcore/mvc/collectionmodel.h>
 #include <sway/webcore/visualcomponent.h>
-#include <sway/webcore/base/treenodeelement.h>
 #include <sway/webcore/prereqs.h>
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(webcore)
 NAMESPACE_BEGIN(mvc)
-NAMESPACE_BEGIN(view)
 
 /*!
  * \brief
  *    Абстрактное представление.
  */
-class AItemView
+class ACollectionView
 	: public AVisualComponent {
 public:
 
@@ -22,7 +21,7 @@ public:
 
 	static void registerEmscriptenClass(lpcstr_t classname);
 
-#pragma endregion // Static methods
+#pragma endregion
 
 #pragma region "Constructor / Destructor"
 
@@ -37,27 +36,25 @@ public:
 	 * \param[in] options
 	 *    Опции представления.
 	 */
-	AItemView(core::containers::HierarchyNodePtr_t parent,
+	ACollectionView(core::containers::HierarchyNodePtr_t parent,
 		//const core::containers::HierarchyNodeIndex & nodeIndex,
-		const std::string & nodeId, const base::TreeNodeElementCreateInfo & createInfo);
-
-	AItemView(core::containers::HierarchyNodePtr_t parent,
-		const core::containers::HierarchyNodeIndex & nodeIndex,
 		const std::string & nodeId, const base::TreeNodeElementCreateInfo & createInfo);
 
 	/*!
 	 * \brief
 	 *    Виртуальный деструктор класса.
 	 */
-	virtual ~AItemView();
+	virtual ~ACollectionView() = default;
 
-#pragma endregion // Constructor / Destructor
+#pragma endregion
+
+	void makeItem(u32_t index, base::TreeNodeElement * child);
 
 #pragma region "IVisitable > HierarchyNode > TreeNodeElement > AVisualComponent implementation"
 
 	virtual void accept(base::ITreeVisitor * visitor) override;
 
-#pragma endregion // IVisitable > HierarchyNode > TreeNodeElement > AVisualComponent implementation
+#pragma endregion
 
 	virtual void initialize();
 
@@ -69,12 +66,19 @@ public:
 	 */
 	virtual void update() override;
 
-#pragma endregion // IObserver > AVisualComponent implementation
+#pragma endregion
 };
 
-NAMESPACE_END(view)
+class ACollectionViewWrapper : public emscripten::wrapper<ACollectionView> {
+public:
+	EMSCRIPTEN_WRAPPER(ACollectionViewWrapper)
+
+	void initialize();
+	void update();
+};
+
 NAMESPACE_END(mvc)
 NAMESPACE_END(webcore)
 NAMESPACE_END(sway)
 
-#endif // _SWAY_WEBCORE_MVC_VIEW_ABSTRACTITEMVIEW_H
+#endif // _SWAY_WEBCORE_MVC_COLLECTIONVIEW_H

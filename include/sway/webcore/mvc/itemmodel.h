@@ -1,16 +1,15 @@
-#ifndef _SWAY_WEBCORE_MVC_MODEL_ABSTRACTITEMMODEL_H
-#define _SWAY_WEBCORE_MVC_MODEL_ABSTRACTITEMMODEL_H
+#ifndef _SWAY_WEBCORE_MVC_ITEMMODEL_H
+#define _SWAY_WEBCORE_MVC_ITEMMODEL_H
 
 #include <sway/webcore/prereqs.h>
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(webcore)
 NAMESPACE_BEGIN(mvc)
-NAMESPACE_BEGIN(model)
 
-typedef std::shared_ptr<class AbstractItemModel> ModelSmartPtr_t;
+typedef std::shared_ptr<class AItemModel> ModelSmartPtr_t;
 
-class AbstractItemModel : public core::utilities::Observable {
+class AItemModel : public core::utilities::Observable {
 public:
 
 #pragma region "Static methods"
@@ -19,7 +18,7 @@ public:
 
 	static ModelSmartPtr_t create();
 
-#pragma endregion // Static methods
+#pragma endregion
 
 #pragma region "Constructor / Destructor"
 
@@ -28,17 +27,17 @@ public:
 	 *    Конструктор класса.
 	 *    Выполняет инициализацию нового экземпляра класса.
 	 */
-	AbstractItemModel();
+	AItemModel();
 
-	AbstractItemModel(emscripten::val object);
+	AItemModel(emscripten::val object);
 
 	/*!
 	 * \brief
 	 *    Виртуальный деструктор класса.
 	 */
-	virtual ~AbstractItemModel();
+	virtual ~AItemModel();
 
-#pragma endregion // Constructor / Destructor
+#pragma endregion
 
 #pragma region "Getters / Setters"
 
@@ -60,15 +59,14 @@ public:
 
 	void setProperties(emscripten::val value);
 
-#pragma endregion // Getters / Setters
+#pragma endregion
 
 private:
 	emscripten::val _properties;
 };
 
-NAMESPACE_END(model)
 NAMESPACE_END(mvc)
 NAMESPACE_END(webcore)
 NAMESPACE_END(sway)
 
-#endif // _SWAY_WEBCORE_MVC_MODEL_ABSTRACTITEMMODEL_H
+#endif // _SWAY_WEBCORE_MVC_ITEMMODEL_H

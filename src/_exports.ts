@@ -1,11 +1,13 @@
 "use strict";
 
-import * as model from "./model/_exports";
 import * as view from "./view/_exports";
-import * as controller from "./controller/_exports";
+
+export * from "./itemmodel";
+export * from "./itemview";
+export * from "./collectionview";
+export * from "./collectionmodel";
+export * from "./controller";
 
 export {
-	model,
-	view,
-	controller
+	view
 };

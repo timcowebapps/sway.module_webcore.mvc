@@ -19,7 +19,7 @@ public:
 
 	static void registerEmscriptenClass(lpcstr_t classname);
 
-#pragma endregion // Static methods
+#pragma endregion
 
 #pragma region "Constructor / Destructor"
 
@@ -38,13 +38,13 @@ public:
 	 */
 	virtual ~StackView() = default;
 
-#pragma endregion // Constructor / Destructor
+#pragma endregion
 
 #pragma region "IVisitable > HierarchyNode > TreeNodeElement implementation"
 
 	virtual void accept(base::ITreeVisitor * visitor);
 
-#pragma endregion // IVisitable > HierarchyNode > TreeNodeElement implementation
+#pragma endregion
 
 #pragma region "General methods"
 
@@ -54,7 +54,7 @@ public:
 
 	void removeItem(base::TreeNodeElement * item);
 
-#pragma endregion // General methods
+#pragma endregion
 
 #pragma region "Getters / Setters"
 
@@ -62,7 +62,7 @@ public:
 
 	void setCurrentItem(u32_t nodeIdex);
 
-#pragma endregion // Getters / Setters
+#pragma endregion
 
 private:
 	u32_t _current = 0;

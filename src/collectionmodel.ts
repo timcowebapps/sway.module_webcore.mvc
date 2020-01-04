@@ -1,10 +1,10 @@
 "use strict";
 
-export class AItemCollection {
+export class ACollectionModel {
 	public _module: any = null;
 
 	constructor(wasm_context: any) {
-		this._module = new wasm_context.module.AbstractItemCollection();
+		this._module = new wasm_context.module.ACollectionModel();
 	}
 
 	public setItem(value: any): void {

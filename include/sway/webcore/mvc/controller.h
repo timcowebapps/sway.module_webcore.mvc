@@ -1,15 +1,14 @@
-#ifndef _SWAY_WEBCORE_MVC_CONTROLLER_ABSTRACTCONTROLLER_H
-#define _SWAY_WEBCORE_MVC_CONTROLLER_ABSTRACTCONTROLLER_H
+#ifndef _SWAY_WEBCORE_MVC_CONTROLLER_H
+#define _SWAY_WEBCORE_MVC_CONTROLLER_H
 
-#include <sway/webcore/mvc/model/abstractitemmodel.h>
+#include <sway/webcore/mvc/itemmodel.h>
 #include <sway/webcore/prereqs.h>
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(webcore)
 NAMESPACE_BEGIN(mvc)
-NAMESPACE_BEGIN(controller)
 
-class AbstractController {
+class AController {
 public:
 
 #pragma region "Constructor / Destructor"
@@ -22,30 +21,29 @@ public:
 	 * \param[in] model
 	 *    Модель данных.
 	 */
-	AbstractController(model::AbstractItemModel */*model::ModelSmartPtr_t*/ model);
+	AController(AItemModel */*model::ModelSmartPtr_t*/ model);
 
 	/*!
 	 * \brief
 	 *    Деструктор класса.
 	 */
-	~AbstractController();
+	~AController() = default;
 
-#pragma endregion // Constructor / Destructor
+#pragma endregion
 
 	/*!
 	 * \brief
 	 *    Возвращает модель данных.
 	 */
-	model::AbstractItemModel * getModel();
+	AItemModel * getModel();
 
 private:
-	model::AbstractItemModel * _model; /*!< Модель данных. */
+	AItemModel * _model; /*!< Модель данных. */
 	//view::ViewComponent * _view; /*!< Представление. */
 };
 
-NAMESPACE_END(controller)
 NAMESPACE_END(mvc)
 NAMESPACE_END(webcore)
 NAMESPACE_END(sway)
 
-#endif // _SWAY_WEBCORE_MVC_CONTROLLER_ABSTRACTCONTROLLER_H
+#endif // _SWAY_WEBCORE_MVC_CONTROLLER_H

@@ -3,7 +3,7 @@
 import * as _ from "underscore";
 import * as Handlebars from "handlebars";
 
-export class AItemCollectionView {
+export class ACollectionView {
 	public wasm_module: any = null;
 
 	/**
@@ -17,7 +17,7 @@ export class AItemCollectionView {
 	 */
 	constructor(public wasm_context: any = null, public wasm_parent: any = null, nodeId: string, nodeCreateInfo?: any) {
 		this.wasm_module = function (self: any) {
-			var AItemCollectionViewObject = wasm_context.module.AItemCollectionView.extend("AItemCollectionView", {
+			var AItemCollectionViewObject = wasm_context.module.ACollectionView.extend("ACollectionView", {
 				__construct: function(parent: any, nodeId: string, nodeCreateInfo: any) {
 					this.__parent.__construct.call(this, parent, nodeId, nodeCreateInfo);
 				},
