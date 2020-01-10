@@ -15,6 +15,9 @@ export class StackView {
 	 * @param {any} nodeCreateInfo Свойства представления.
 	 */
 	constructor(public wasm_context: any = null, parent: any, nodeId: string, nodeCreateInfo?: any) {
-		this.wasm_module = new wasm_context.module.StackView(parent, nodeId, nodeCreateInfo);
+		this.wasm_module = new wasm_context.module.StackView(parent, nodeId, _.defaults(nodeCreateInfo, {
+			stylesheet: null,
+			classes: []
+		}));
 	}
 };

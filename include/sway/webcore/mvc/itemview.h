@@ -2,7 +2,7 @@
 #define _SWAY_WEBCORE_MVC_ITEMVIEW_H
 
 #include <sway/webcore/visualcomponent.h>
-#include <sway/webcore/base/treenodeelement.h>
+#include <sway/webcore/treenodeelement.h>
 #include <sway/webcore/prereqs.h>
 
 NAMESPACE_BEGIN(sway)
@@ -38,11 +38,11 @@ public:
 	 */
 	AItemView(core::containers::HierarchyNodePtr_t parent,
 		//const core::containers::HierarchyNodeIndex & nodeIndex,
-		const std::string & nodeId, const base::TreeNodeElementCreateInfo & createInfo);
+		const std::string & nodeId, const TreeNodeElementCreateInfo & createInfo);
 
 	AItemView(core::containers::HierarchyNodePtr_t parent,
 		const core::containers::HierarchyNodeIndex & nodeIndex,
-		const std::string & nodeId, const base::TreeNodeElementCreateInfo & createInfo);
+		const std::string & nodeId, const TreeNodeElementCreateInfo & createInfo);
 
 	/*!
 	 * \brief
@@ -54,7 +54,7 @@ public:
 
 #pragma region "IVisitable > HierarchyNode > TreeNodeElement > AVisualComponent implementation"
 
-	virtual void accept(base::ITreeVisitor * visitor) override;
+	virtual void accept(ITreeVisitor * visitor) override;
 
 #pragma endregion
 

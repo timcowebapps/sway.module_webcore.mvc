@@ -38,7 +38,7 @@ public:
 	 */
 	ACollectionView(core::containers::HierarchyNodePtr_t parent,
 		//const core::containers::HierarchyNodeIndex & nodeIndex,
-		const std::string & nodeId, const base::TreeNodeElementCreateInfo & createInfo);
+		const std::string & nodeId, const TreeNodeElementCreateInfo & createInfo);
 
 	/*!
 	 * \brief
@@ -48,11 +48,11 @@ public:
 
 #pragma endregion
 
-	void makeItem(u32_t index, base::TreeNodeElement * child);
+	void makeItem(u32_t index, TreeNodeElement * child);
 
 #pragma region "IVisitable > HierarchyNode > TreeNodeElement > AVisualComponent implementation"
 
-	virtual void accept(base::ITreeVisitor * visitor) override;
+	virtual void accept(ITreeVisitor * visitor) override;
 
 #pragma endregion
 

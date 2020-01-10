@@ -1,7 +1,7 @@
 #ifndef _SWAY_WEBCORE_MVC_VIEW_ADVANCED_STACKVIEW_H
 #define _SWAY_WEBCORE_MVC_VIEW_ADVANCED_STACKVIEW_H
 
-#include <sway/webcore/base/treenodeelement.h>
+#include <sway/webcore/treenodeelement.h>
 #include <sway/webcore/prereqs.h>
 
 NAMESPACE_BEGIN(sway)
@@ -11,7 +11,7 @@ NAMESPACE_BEGIN(view)
 NAMESPACE_BEGIN(advanced)
 
 class StackView
-	: public base::TreeNodeElement {
+	: public TreeNodeElement {
 
 public:
 
@@ -30,7 +30,7 @@ public:
 	 */
 	StackView(core::containers::HierarchyNodePtr_t parent,
 		//const core::containers::HierarchyNodeIndex & nodeIndex,
-		const std::string & nodeId, const base::TreeNodeElementCreateInfo & createInfo);
+		const std::string & nodeId, const TreeNodeElementCreateInfo & createInfo);
 
 	/*!
 	 * \brief
@@ -42,17 +42,17 @@ public:
 
 #pragma region "IVisitable > HierarchyNode > TreeNodeElement implementation"
 
-	virtual void accept(base::ITreeVisitor * visitor);
+	virtual void accept(ITreeVisitor * visitor);
 
 #pragma endregion
 
 #pragma region "General methods"
 
-	void addItem(base::TreeNodeElement * item);
+	void addItem(TreeNodeElement * item);
 
 	void handleItemAdded(const core::containers::HierarchyNodeIndex & nodeIndex);
 
-	void removeItem(base::TreeNodeElement * item);
+	void removeItem(TreeNodeElement * item);
 
 #pragma endregion
 

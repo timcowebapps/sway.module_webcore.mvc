@@ -1,5 +1,5 @@
 #include <sway/webcore/mvc/view/advanced/stackview.h>
-#include <sway/webcore/base/treeupdater.h>
+#include <sway/webcore/treeupdater.h>
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(webcore)
@@ -8,8 +8,8 @@ NAMESPACE_BEGIN(view)
 NAMESPACE_BEGIN(advanced)
 
 void StackView::registerEmscriptenClass(lpcstr_t classname) {
-	emscripten::class_<StackView, emscripten::base<base::TreeNodeElement>>(classname)
-		.constructor<core::containers::HierarchyNodePtr_t, std::string, base::TreeNodeElementCreateInfo>()
+	emscripten::class_<StackView, emscripten::base<TreeNodeElement>>(classname)
+		.constructor<core::containers::HierarchyNodePtr_t, std::string, TreeNodeElementCreateInfo>()
 		.function("addItem", &StackView::addItem, emscripten::allow_raw_pointers())
 		.function("removeItem", &StackView::removeItem, emscripten::allow_raw_pointers())
 		.function("getCurrentItem", &StackView::getCurrentItem)
@@ -18,19 +18,19 @@ void StackView::registerEmscriptenClass(lpcstr_t classname) {
 
 StackView::StackView(core::containers::HierarchyNodePtr_t parent,
 	//const core::containers::HierarchyNodeIndex & nodeIndex,
-	const std::string & nodeId, const base::TreeNodeElementCreateInfo & createInfo)
-	: base::TreeNodeElement(parent, core::containers::HierarchyNodeIndex(), nodeId, createInfo) {
+	const std::string & nodeId, const TreeNodeElementCreateInfo & createInfo)
+	: TreeNodeElement(parent, core::containers::HierarchyNodeIndex(), nodeId, createInfo) {
 	// Empty
 }
 
-void StackView::accept(base::ITreeVisitor * visitor) {
+void StackView::accept(ITreeVisitor * visitor) {
 	visitor->visitOnEnter(this);
 
 	for (core::containers::HierarchyNodePtr_t node : getChildren())
 		static_cast<StackView *>(node)->accept(visitor);
 }
 
-void StackView::addItem(base::TreeNodeElement * item) {
+void StackView::addItem(TreeNodeElement * item) {
 	item->setVisible(false);
 	add(item, std::bind(&StackView::handleItemAdded, this, std::placeholders::_1));
 }
@@ -39,7 +39,7 @@ void StackView::handleItemAdded(const core::containers::HierarchyNodeIndex & nod
 	EM_ASM({console.log("STACK_VIEW ITEM ADDED")});
 }
 
-void StackView::removeItem(base::TreeNodeElement * item) {
+void StackView::removeItem(TreeNodeElement * item) {
 	removeChild(item);
 }
 

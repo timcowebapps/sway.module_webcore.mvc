@@ -1,5 +1,5 @@
 #include <sway/webcore/mvc/itemview.h>
-#include <sway/webcore/base/treeupdater.h>
+#include <sway/webcore/treeupdater.h>
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(webcore)
@@ -7,8 +7,8 @@ NAMESPACE_BEGIN(mvc)
 
 void AItemView::registerEmscriptenClass(lpcstr_t classname) {
 	emscripten::class_<AItemView, emscripten::base<AVisualComponent>>(classname)
-		.allow_subclass<AItemViewWrapper>("AItemViewWrapper", emscripten::constructor<core::containers::HierarchyNodePtr_t, std::string, base::TreeNodeElementCreateInfo>())
-		.constructor<core::containers::HierarchyNodePtr_t, std::string, base::TreeNodeElementCreateInfo>()
+		.allow_subclass<AItemViewWrapper>("AItemViewWrapper", emscripten::constructor<core::containers::HierarchyNodePtr_t, std::string, TreeNodeElementCreateInfo>())
+		.constructor<core::containers::HierarchyNodePtr_t, std::string, TreeNodeElementCreateInfo>()
 		.function("initialize", emscripten::optional_override([](AItemView & self) {
 			return self.AItemView::initialize();
 		}))
@@ -19,19 +19,19 @@ void AItemView::registerEmscriptenClass(lpcstr_t classname) {
 
 AItemView::AItemView(core::containers::HierarchyNodePtr_t parent,
 	//const core::containers::HierarchyNodeIndex & nodeIndex,
-	const std::string & nodeId, const base::TreeNodeElementCreateInfo & createInfo)
+	const std::string & nodeId, const TreeNodeElementCreateInfo & createInfo)
 	: AVisualComponent(parent, core::containers::HierarchyNodeIndex(), nodeId, createInfo) {
 	// Empty
 }
 
 AItemView::AItemView(core::containers::HierarchyNodePtr_t parent,
 	const core::containers::HierarchyNodeIndex & nodeIndex,
-	const std::string & nodeId, const base::TreeNodeElementCreateInfo & createInfo)
+	const std::string & nodeId, const TreeNodeElementCreateInfo & createInfo)
 	: AVisualComponent(parent, nodeIndex, nodeId, createInfo) {
 	// Empty
 }
 
-void AItemView::accept(base::ITreeVisitor * visitor) {
+void AItemView::accept(ITreeVisitor * visitor) {
 	visitor->visitOnEnter(this);
 
 	for (core::containers::HierarchyNodePtr_t node : getChildren())

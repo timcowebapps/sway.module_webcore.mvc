@@ -19,7 +19,10 @@ export class ACollectionView {
 		this.wasm_module = function (self: any) {
 			var AItemCollectionViewObject = wasm_context.module.ACollectionView.extend("ACollectionView", {
 				__construct: function(parent: any, nodeId: string, nodeCreateInfo: any) {
-					this.__parent.__construct.call(this, parent, nodeId, nodeCreateInfo);
+					this.__parent.__construct.call(this, parent, nodeId, _.defaults(nodeCreateInfo, {
+						stylesheet: null,
+						classes: []
+					}));
 				},
 				__destruct: function() {
 					this.__parent.__destruct.call(this);
