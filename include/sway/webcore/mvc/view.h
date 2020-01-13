@@ -1,7 +1,7 @@
-#ifndef _SWAY_WEBCORE_MVC_ITEMVIEW_H
-#define _SWAY_WEBCORE_MVC_ITEMVIEW_H
+#ifndef _SWAY_WEBCORE_MVC_VIEW_H
+#define _SWAY_WEBCORE_MVC_VIEW_H
 
-#include <sway/webcore/mvc/view.h>
+#include <sway/webcore/css/stylesheet.h>
 #include <sway/webcore/treenodeelement.h>
 #include <sway/webcore/prereqs.h>
 
@@ -13,8 +13,9 @@ NAMESPACE_BEGIN(mvc)
  * \brief
  *    Абстрактное представление.
  */
-class AItemView
-	: public AView {
+class AView
+	: public TreeNodeElement
+	, public virtual core::utilities::IObserver {
 public:
 
 #pragma region "Static methods"
@@ -36,11 +37,7 @@ public:
 	 * \param[in] options
 	 *    Опции представления.
 	 */
-	AItemView(core::containers::HierarchyNodePtr_t parent,
-		//const core::containers::HierarchyNodeIndex & nodeIndex,
-		const std::string & nodeId, const TreeNodeElementCreateInfo & createInfo);
-
-	AItemView(core::containers::HierarchyNodePtr_t parent,
+	AView(core::containers::HierarchyNodePtr_t parent,
 		const core::containers::HierarchyNodeIndex & nodeIndex,
 		const std::string & nodeId, const TreeNodeElementCreateInfo & createInfo);
 
@@ -48,11 +45,11 @@ public:
 	 * \brief
 	 *    Виртуальный деструктор класса.
 	 */
-	virtual ~AItemView() = default;
+	virtual ~AView() = default;
 
 #pragma endregion
 
-#pragma region "IVisitable > HierarchyNode > TreeNodeElement > AView implementation"
+#pragma region "IVisitable > HierarchyNode > TreeNodeElement implementation"
 
 	virtual void accept(ITreeVisitor * visitor) override;
 
@@ -60,7 +57,7 @@ public:
 
 	virtual void initialize();
 
-#pragma region "IObserver > AView implementation"
+#pragma region "IObserver implementation"
 
 	/*!
 	 * \brief
@@ -69,18 +66,44 @@ public:
 	virtual void update() override;
 
 #pragma endregion
-};
 
-class AItemViewWrapper : public emscripten::wrapper<AItemView> {
-public:
-	EMSCRIPTEN_WRAPPER(AItemViewWrapper)
+#pragma region "Getters / Setters"
 
-	void initialize();
-	void update();
+	css::StyleSheet getStyleSheet() const;
+
+	void setStyleSheet(const emscripten::val & mapper);
+	
+	void appendStyle();
+
+	void addSelector(css::SelectorSmartPtr_t selector);
+	
+	css::SelectorVec_t getSelectors();
+
+	/*!
+	 * \brief
+	 *    Возвращает модель данных.
+	 */
+	core::utilities::Observable * getModel();
+
+	/*!
+	 * \brief
+	 *    Устанавливает модель данных.
+	 * 
+	 * \param[in] model
+	 *    Модель данных.
+	 */
+	void setModel(core::utilities::Observable * model);
+
+#pragma endregion
+
+private:
+	css::StyleSheet _styleSheet;
+	css::SelectorVec_t _selectors;
+	core::utilities::Observable * _model = nullptr; /*!< Модель данных. */
 };
 
 NAMESPACE_END(mvc)
 NAMESPACE_END(webcore)
 NAMESPACE_END(sway)
 
-#endif // _SWAY_WEBCORE_MVC_ITEMVIEW_H
+#endif // _SWAY_WEBCORE_MVC_VIEW_H

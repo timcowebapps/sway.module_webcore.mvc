@@ -2,7 +2,7 @@
 #define _SWAY_WEBCORE_MVC_COLLECTIONVIEW_H
 
 #include <sway/webcore/mvc/collectionmodel.h>
-#include <sway/webcore/visualcomponent.h>
+#include <sway/webcore/mvc/view.h>
 #include <sway/webcore/prereqs.h>
 
 NAMESPACE_BEGIN(sway)
@@ -14,7 +14,7 @@ NAMESPACE_BEGIN(mvc)
  *    Абстрактное представление.
  */
 class ACollectionView
-	: public AVisualComponent {
+	: public AView {
 public:
 
 #pragma region "Static methods"
@@ -50,7 +50,7 @@ public:
 
 	void makeItem(u32_t index, TreeNodeElement * child);
 
-#pragma region "IVisitable > HierarchyNode > TreeNodeElement > AVisualComponent implementation"
+#pragma region "IVisitable > HierarchyNode > TreeNodeElement > AView implementation"
 
 	virtual void accept(ITreeVisitor * visitor) override;
 
@@ -58,7 +58,7 @@ public:
 
 	virtual void initialize();
 
-#pragma region "IObserver > AVisualComponent implementation"
+#pragma region "IObserver > AView implementation"
 
 	/*!
 	 * \brief

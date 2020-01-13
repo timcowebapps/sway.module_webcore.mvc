@@ -8,7 +8,7 @@ NAMESPACE_BEGIN(webcore)
 NAMESPACE_BEGIN(mvc)
 
 void ACollectionView::registerEmscriptenClass(lpcstr_t classname) {
-	emscripten::class_<ACollectionView, emscripten::base<AVisualComponent>>(classname)
+	emscripten::class_<ACollectionView, emscripten::base<AView>>(classname)
 		.allow_subclass<ACollectionViewWrapper>("ACollectionViewWrapper", emscripten::constructor<core::containers::HierarchyNodePtr_t, std::string, TreeNodeElementCreateInfo>())
 		.constructor<core::containers::HierarchyNodePtr_t, std::string, TreeNodeElementCreateInfo>()
 		.function("initialize", emscripten::optional_override([](ACollectionView & self) {
@@ -23,7 +23,7 @@ void ACollectionView::registerEmscriptenClass(lpcstr_t classname) {
 ACollectionView::ACollectionView(core::containers::HierarchyNodePtr_t parent,
 	//const core::containers::HierarchyNodeIndex & nodeIndex,
 	const std::string & nodeId, const TreeNodeElementCreateInfo & createInfo)
-	: AVisualComponent(parent, core::containers::HierarchyNodeIndex(), nodeId, createInfo) {
+	: AView(parent, core::containers::HierarchyNodeIndex(), nodeId, createInfo) {
 	// Empty
 }
 

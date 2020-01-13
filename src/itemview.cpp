@@ -6,7 +6,7 @@ NAMESPACE_BEGIN(webcore)
 NAMESPACE_BEGIN(mvc)
 
 void AItemView::registerEmscriptenClass(lpcstr_t classname) {
-	emscripten::class_<AItemView, emscripten::base<AVisualComponent>>(classname)
+	emscripten::class_<AItemView, emscripten::base<AView>>(classname)
 		.allow_subclass<AItemViewWrapper>("AItemViewWrapper", emscripten::constructor<core::containers::HierarchyNodePtr_t, std::string, TreeNodeElementCreateInfo>())
 		.constructor<core::containers::HierarchyNodePtr_t, std::string, TreeNodeElementCreateInfo>()
 		.function("initialize", emscripten::optional_override([](AItemView & self) {
@@ -20,14 +20,14 @@ void AItemView::registerEmscriptenClass(lpcstr_t classname) {
 AItemView::AItemView(core::containers::HierarchyNodePtr_t parent,
 	//const core::containers::HierarchyNodeIndex & nodeIndex,
 	const std::string & nodeId, const TreeNodeElementCreateInfo & createInfo)
-	: AVisualComponent(parent, core::containers::HierarchyNodeIndex(), nodeId, createInfo) {
+	: AView(parent, core::containers::HierarchyNodeIndex(), nodeId, createInfo) {
 	// Empty
 }
 
 AItemView::AItemView(core::containers::HierarchyNodePtr_t parent,
 	const core::containers::HierarchyNodeIndex & nodeIndex,
 	const std::string & nodeId, const TreeNodeElementCreateInfo & createInfo)
-	: AVisualComponent(parent, nodeIndex, nodeId, createInfo) {
+	: AView(parent, nodeIndex, nodeId, createInfo) {
 	// Empty
 }
 
