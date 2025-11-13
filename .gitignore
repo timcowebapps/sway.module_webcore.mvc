@@ -1,0 +1,10 @@
+# project output files
+build/*
+!build/.gitkeep
+
+bin/*
+!bin/.gitkeep
+
+# osx noise
+.DS_Store
+profile

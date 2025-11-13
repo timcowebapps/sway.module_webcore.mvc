@@ -1,13 +1,11 @@
 #include <sway/webcore/mvc/itemmodel.h>
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(webcore)
-NAMESPACE_BEGIN(mvc)
+namespace sway::webcore::mvc {
 
 void AItemModel::registerEmscriptenClass(lpcstr_t classname) {
 	emscripten::class_<AItemModel, emscripten::base<Observable>>(classname)
 		.constructor()
-		.smart_ptr<ModelSmartPtr_t>(core::misc::format("shared_ptr<%s>", classname).c_str())
+		.smart_ptr<ModelSmartPtr_t>(core::format("shared_ptr<%s>", classname).c_str())
 		.class_function("create", &AItemModel::create)
 		.function("setProperty", &AItemModel::setProperty)
 		.function("getProperty", &AItemModel::getProperty)
@@ -50,6 +48,4 @@ void AItemModel::setProperties(emscripten::val value) {
 	_properties = value;
 }
 
-NAMESPACE_END(mvc)
-NAMESPACE_END(webcore)
-NAMESPACE_END(sway)
+} // namespace sway::webcore::mvc

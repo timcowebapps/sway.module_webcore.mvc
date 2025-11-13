@@ -1,9 +1,7 @@
 #include <sway/webcore/mvc/collectionmodel.h>
 #include <sway/webcore/mvc/itemmodel.h>
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(webcore)
-NAMESPACE_BEGIN(mvc)
+namespace sway::webcore::mvc {
 
 void ACollectionModel::registerEmscriptenClass(lpcstr_t classname) {
 	emscripten::register_vector<AItemModel *>("vector<AItemModel>");
@@ -50,6 +48,4 @@ std::vector<AItemModel *> ACollectionModel::getItems() const {
 	return _items;
 }
 
-NAMESPACE_END(mvc)
-NAMESPACE_END(webcore)
-NAMESPACE_END(sway)
+} // namespace sway::webcore::mvc

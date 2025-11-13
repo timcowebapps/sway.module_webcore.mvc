@@ -1,14 +1,10 @@
 #ifndef _SWAY_WEBCORE_MVC_VIEW_ADVANCED_STACKVIEW_H
 #define _SWAY_WEBCORE_MVC_VIEW_ADVANCED_STACKVIEW_H
 
-#include <sway/webcore/treenodeelement.h>
-#include <sway/webcore/prereqs.h>
+#include <sway/webcore/treenodeelement.hpp>
+#include <sway/webcore/prereqs.hpp>
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(webcore)
-NAMESPACE_BEGIN(mvc)
-NAMESPACE_BEGIN(view)
-NAMESPACE_BEGIN(advanced)
+namespace sway::webcore::mvc {
 
 class StackView
 	: public TreeNodeElement {
@@ -28,9 +24,9 @@ public:
 	 *    Конструктор класса.
 	 *    Выполняет инициализацию нового экземпляра класса.
 	 */
-	StackView(core::containers::HierarchyNodePtr_t parent,
-		//const core::containers::HierarchyNodeIndex & nodeIndex,
-		const std::string & nodeId, const TreeNodeElementCreateInfo & createInfo);
+	StackView(core::NodePtr_t parent,
+		//const core::NodeIndex & nodeIndex,
+		const std::string & nodeId, const TreeNodeElementDescriptor & createInfo);
 
 	/*!
 	 * \brief
@@ -42,7 +38,8 @@ public:
 
 #pragma region "IVisitable > HierarchyNode > TreeNodeElement implementation"
 
-	virtual void accept(ITreeVisitor * visitor);
+	// virtual void accept(ITreeVisitor * visitor);
+	 virtual auto traverse(core::typedefs::TraverserPtr_t traverser) -> u32_t override;
 
 #pragma endregion
 
@@ -50,7 +47,7 @@ public:
 
 	void addItem(TreeNodeElement * item);
 
-	void handleItemAdded(const core::containers::HierarchyNodeIndex & nodeIndex);
+	void handleItemAdded(const core::NodeIndex & nodeIndex);
 
 	void removeItem(TreeNodeElement * item);
 
@@ -68,10 +65,6 @@ private:
 	u32_t _current = 0;
 };
 
-NAMESPACE_END(advanced)
-NAMESPACE_END(view)
-NAMESPACE_END(mvc)
-NAMESPACE_END(webcore)
-NAMESPACE_END(sway)
+} // namespace sway::webcore::mvc
 
 #endif // _SWAY_WEBCORE_MVC_VIEW_ADVANCED_STACKVIEW_H

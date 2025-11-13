@@ -1,13 +1,19 @@
 #ifndef _SWAY_WEBCORE_MVC_VIEW_H
 #define _SWAY_WEBCORE_MVC_VIEW_H
 
-#include <sway/webcore/css/stylesheet.h>
-#include <sway/webcore/treenodeelement.h>
-#include <sway/webcore/prereqs.h>
+#include <sway/webcore/css/stylesheet.hpp>
+#include <sway/webcore/treenodeelement.hpp>
+#include <sway/webcore/prereqs.hpp>
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(webcore)
-NAMESPACE_BEGIN(mvc)
+#ifdef EMSCRIPTEN_PLATFORM
+#  include <emscripten/emscripten.h>
+#  include <emscripten/val.h>
+#  ifdef EMSCRIPTEN_USE_BINDINGS
+#    include <emscripten/bind.h>
+#  endif
+#endif
+
+namespace sway::webcore::mvc {
 
 /*!
  * \brief
@@ -15,7 +21,8 @@ NAMESPACE_BEGIN(mvc)
  */
 class AView
 	: public TreeNodeElement
-	, public virtual core::utilities::IObserver {
+	// , public virtual core::Observer 
+	{
 public:
 
 #pragma region "Static methods"
@@ -37,9 +44,9 @@ public:
 	 * \param[in] options
 	 *    Опции представления.
 	 */
-	AView(core::containers::HierarchyNodePtr_t parent,
-		const core::containers::HierarchyNodeIndex & nodeIndex,
-		const std::string & nodeId, const TreeNodeElementCreateInfo & createInfo);
+	AView(core::NodePtr_t parent,
+		const core::NodeIndex & nodeIndex,
+		const std::string & nodeId, const TreeNodeElementDescriptor & createInfo);
 
 	/*!
 	 * \brief
@@ -49,41 +56,42 @@ public:
 
 #pragma endregion
 
-#pragma region "IVisitable > HierarchyNode > TreeNodeElement implementation"
+#pragma region "Visitable > HierarchyNode > TreeNodeElement implementation"
 
-	virtual void accept(ITreeVisitor * visitor) override;
+	// virtual void accept(ITreeVisitor * visitor) override;
+	 virtual auto traverse(core::typedefs::TraverserPtr_t traverser) -> u32_t override;
 
 #pragma endregion
 
 	virtual void initialize();
 
-#pragma region "IObserver implementation"
+#pragma region "Observer implementation"
 
 	/*!
 	 * \brief
 	 *    Обновляет состояние наблюдателя.
 	 */
-	virtual void update() override;
+	virtual void update();// override;
 
 #pragma endregion
 
 #pragma region "Getters / Setters"
 
-	css::StyleSheet getStyleSheet() const;
+	auto getStyleSheet() const -> StyleSheet;
 
 	void setStyleSheet(const emscripten::val & mapper);
 	
 	void appendStyle();
 
-	void addSelector(css::SelectorSmartPtr_t selector);
+	void addSelector(std::shared_ptr<Selector> selector);
 	
-	css::SelectorVec_t getSelectors();
+	auto getSelectors() -> std::vector<std::shared_ptr<Selector>>;
 
 	/*!
 	 * \brief
 	 *    Возвращает модель данных.
 	 */
-	core::utilities::Observable * getModel();
+	auto getModel() -> core::Observable *;
 
 	/*!
 	 * \brief
@@ -92,18 +100,16 @@ public:
 	 * \param[in] model
 	 *    Модель данных.
 	 */
-	void setModel(core::utilities::Observable * model);
+	void setModel(core::Observable * model);
 
 #pragma endregion
 
 private:
-	css::StyleSheet _styleSheet;
-	css::SelectorVec_t _selectors;
-	core::utilities::Observable * _model = nullptr; /*!< Модель данных. */
+	StyleSheet _styleSheet;
+	std::vector<std::shared_ptr<Selector>> _selectors;
+	core::Observable * _model = nullptr; /*!< Модель данных. */
 };
 
-NAMESPACE_END(mvc)
-NAMESPACE_END(webcore)
-NAMESPACE_END(sway)
+} // namespace sway::webcore::mvc
 
 #endif // _SWAY_WEBCORE_MVC_VIEW_H

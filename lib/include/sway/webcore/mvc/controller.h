@@ -2,11 +2,9 @@
 #define _SWAY_WEBCORE_MVC_CONTROLLER_H
 
 #include <sway/webcore/mvc/itemmodel.h>
-#include <sway/webcore/prereqs.h>
+#include <sway/webcore/prereqs.hpp>
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(webcore)
-NAMESPACE_BEGIN(mvc)
+namespace sway::webcore::mvc {
 
 class AController {
 public:
@@ -42,8 +40,6 @@ private:
 	//view::ViewComponent * _view; /*!< Представление. */
 };
 
-NAMESPACE_END(mvc)
-NAMESPACE_END(webcore)
-NAMESPACE_END(sway)
+} // namespace sway::webcore::mvc
 
 #endif // _SWAY_WEBCORE_MVC_CONTROLLER_H

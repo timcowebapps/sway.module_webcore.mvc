@@ -1,15 +1,13 @@
 #ifndef _SWAY_WEBCORE_MVC_ITEMMODEL_H
 #define _SWAY_WEBCORE_MVC_ITEMMODEL_H
 
-#include <sway/webcore/prereqs.h>
+#include <sway/webcore.h>
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(webcore)
-NAMESPACE_BEGIN(mvc)
+namespace sway::webcore::mvc {
 
 typedef std::shared_ptr<class AItemModel> ModelSmartPtr_t;
 
-class AItemModel : public core::utilities::Observable {
+class AItemModel : public core::Observable {
 public:
 
 #pragma region "Static methods"
@@ -65,8 +63,6 @@ private:
 	emscripten::val _properties;
 };
 
-NAMESPACE_END(mvc)
-NAMESPACE_END(webcore)
-NAMESPACE_END(sway)
+} // namespace sway::webcore::mvc
 
 #endif // _SWAY_WEBCORE_MVC_ITEMMODEL_H

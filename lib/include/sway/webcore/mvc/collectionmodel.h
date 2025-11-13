@@ -2,13 +2,11 @@
 #define _SWAY_WEBCORE_MVC_COLLECTIONMODEL_H
 
 #include <sway/webcore/mvc/itemmodel.h>
-#include <sway/webcore/prereqs.h>
+#include <sway/webcore.h>
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(webcore)
-NAMESPACE_BEGIN(mvc)
+namespace sway::webcore::mvc {
 
-class ACollectionModel : public core::utilities::Observable {
+class ACollectionModel : public core::Observable {
 public:
 
 #pragma region "Static methods"
@@ -54,8 +52,6 @@ private:
 	std::vector<AItemModel *> _items;
 };
 
-NAMESPACE_END(mvc)
-NAMESPACE_END(webcore)
-NAMESPACE_END(sway)
+} // namespace sway::webcore::mvc
 
 #endif // _SWAY_WEBCORE_MVC_COLLECTIONMODEL_H

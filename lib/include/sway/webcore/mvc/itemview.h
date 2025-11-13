@@ -2,12 +2,10 @@
 #define _SWAY_WEBCORE_MVC_ITEMVIEW_H
 
 #include <sway/webcore/mvc/view.h>
-#include <sway/webcore/treenodeelement.h>
-#include <sway/webcore/prereqs.h>
+#include <sway/webcore/treenodeelement.hpp>
+#include <sway/webcore/prereqs.hpp>
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(webcore)
-NAMESPACE_BEGIN(mvc)
+namespace sway::webcore::mvc {
 
 /*!
  * \brief
@@ -36,13 +34,13 @@ public:
 	 * \param[in] options
 	 *    Опции представления.
 	 */
-	AItemView(core::containers::HierarchyNodePtr_t parent,
-		//const core::containers::HierarchyNodeIndex & nodeIndex,
-		const std::string & nodeId, const TreeNodeElementCreateInfo & createInfo);
+	AItemView(core::NodePtr_t parent,
+		//const core::NodeIndex & nodeIndex,
+		const std::string & nodeId, const TreeNodeElementDescriptor & createInfo);
 
-	AItemView(core::containers::HierarchyNodePtr_t parent,
-		const core::containers::HierarchyNodeIndex & nodeIndex,
-		const std::string & nodeId, const TreeNodeElementCreateInfo & createInfo);
+	AItemView(core::NodePtr_t parent,
+		const core::NodeIndex & nodeIndex,
+		const std::string & nodeId, const TreeNodeElementDescriptor & createInfo);
 
 	/*!
 	 * \brief
@@ -54,7 +52,8 @@ public:
 
 #pragma region "IVisitable > HierarchyNode > TreeNodeElement > AView implementation"
 
-	virtual void accept(ITreeVisitor * visitor) override;
+	// virtual void accept(ITreeVisitor * visitor) override;
+	 virtual auto traverse(core::typedefs::TraverserPtr_t traverser) -> u32_t override;
 
 #pragma endregion
 
@@ -79,8 +78,6 @@ public:
 	void update();
 };
 
-NAMESPACE_END(mvc)
-NAMESPACE_END(webcore)
-NAMESPACE_END(sway)
+} // namespace sway::webcore::mvc
 
 #endif // _SWAY_WEBCORE_MVC_ITEMVIEW_H

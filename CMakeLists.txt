@@ -1,53 +1,109 @@
-# Запрашиваем минимальную версию CMake
-cmake_minimum_required(VERSION 3.14.3 FATAL_ERROR)
+#--------------------------------------------------------------------------------
+# CMake version
+#--------------------------------------------------------------------------------
 
-# Мета-информация о проекте
-set(META_PROJECT_NAME module_webcore.mvc)
-set(META_LIB_NAME lib${META_PROJECT_NAME})
-set(META_VERSION_MAJOR 0)
-set(META_VERSION_MINOR 1)
-set(META_VERSION_PATCH 0)
-set(META_VERSION ${META_VERSION_MAJOR}.${META_VERSION_MINOR}.${META_VERSION_PATCH})
-set(META_LANGUAGES C CXX)
+cmake_minimum_required(VERSION 3.25.0 FATAL_ERROR)
 
-project(${META_PROJECT_NAME} VERSION ${META_VERSION} LANGUAGES ${META_LANGUAGES})
+#--------------------------------------------------------------------------------
+# Project directories
+#--------------------------------------------------------------------------------
 
-if (NOT TARGET libmodule_core)
-	add_subdirectory(modules/sway.module_core)
+set(MODULE_WEBCORE_MVC_ROOT_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
+set(MODULE_WEBCORE_MVC_LIST_DIR "${CMAKE_CURRENT_LIST_DIR}")
+set(MODULE_WEBCORE_MVC_LIB_DIR "${MODULE_WEBCORE_MVC_ROOT_DIR}/lib")
+set(MODULE_WEBCORE_MVC_BIN_DIR "${CMAKE_SOURCE_DIR}/bin")
+set(MODULE_WEBCORE_MVC_CMAKE_DIR "${MODULE_WEBCORE_MVC_ROOT_DIR}/submodules/sway.module_core/cmake_modules")
+
+#--------------------------------------------------------------------------------
+# Include CMake modules
+#--------------------------------------------------------------------------------
+
+include("${MODULE_WEBCORE_MVC_CMAKE_DIR}/options.cmake")
+include("${MODULE_WEBCORE_MVC_CMAKE_DIR}/project_metadata.cmake")
+include("${MODULE_WEBCORE_MVC_CMAKE_DIR}/add_submodule.cmake")
+include("${MODULE_WEBCORE_MVC_CMAKE_DIR}/set_output_dir.cmake")
+include("${MODULE_WEBCORE_MVC_CMAKE_DIR}/set_compile_definitions.cmake")
+include("${MODULE_WEBCORE_MVC_CMAKE_DIR}/enable_cxx17.cmake")
+include("${MODULE_WEBCORE_MVC_CMAKE_DIR}/enable_coverage.cmake")
+include("${MODULE_WEBCORE_MVC_CMAKE_DIR}/modules/create_object_library.cmake")
+include("${MODULE_WEBCORE_MVC_CMAKE_DIR}/modules/create_interface.cmake")
+include("${MODULE_WEBCORE_MVC_CMAKE_DIR}/modules/logger.cmake")
+include("${MODULE_WEBCORE_MVC_CMAKE_DIR}/modules/compiler/clang/create_library.cmake")
+include("${MODULE_WEBCORE_MVC_CMAKE_DIR}/modules/compiler/emscripten/setup.cmake")
+include("${MODULE_WEBCORE_MVC_CMAKE_DIR}/modules/compiler/emscripten/create_library.cmake")
+include("${MODULE_WEBCORE_MVC_CMAKE_DIR}/modules/compiler/emscripten/gen_target_name.cmake")
+include("${MODULE_WEBCORE_MVC_CMAKE_DIR}/modules/compiler/emscripten/set_optimization.cmake")
+include("${MODULE_WEBCORE_MVC_CMAKE_DIR}/modules/compiler/emscripten/set_environment.cmake")
+include("${MODULE_WEBCORE_MVC_CMAKE_DIR}/modules/compiler/emscripten/set_compilation.cmake")
+include("${MODULE_WEBCORE_MVC_CMAKE_DIR}/modules/compiler/emscripten/set_modularize.cmake")
+
+#--------------------------------------------------------------------------------
+# Options
+#--------------------------------------------------------------------------------
+
+set_glob_options()
+
+option(MODULE_WEBCORE_MVC_ENVIRONMENT "Environment variable" OFF)
+option(MODULE_WEBCORE_MVC_COMPILATION "Compilation variable" OFF)
+
+#--------------------------------------------------------------------------------
+# [EMSCRIPTEN]: Setup
+#--------------------------------------------------------------------------------
+
+if(GLOB_EMSCRIPTEN_PLATFORM)
+  emscripten_setup()
 endif()
 
-if (NOT TARGET libmodule_webcore)
-	add_subdirectory(modules/sway.module_webcore)
-endif()
+#--------------------------------------------------------------------------------
+# Project
+#--------------------------------------------------------------------------------
 
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_COMPILER "emcc")
+project_metadata("webcore_mvc" 0.2.0)
+project(${MODULE_WEBCORE_MVC_PROJ_NAME} VERSION ${MODULE_WEBCORE_MVC_VERSION} LANGUAGES CXX)
 
-# Определяем каталог вывода по умолчанию
-if(CMAKE_BUILD_TYPE MATCHES Debug)
-	set(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin/dbg)
-	set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin/dbg)
-else()
-	set(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin)
-	set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin)
-endif()
+#---------------------------------------------------------------------------------
+# Submodules
+#---------------------------------------------------------------------------------
 
-set(MODULE_DIR ${CMAKE_CURRENT_LIST_DIR})
+add_submodule("module_core" submodules/sway.module_core)
+add_submodule("module_webcore" submodules/sway.module_webcore)
 
-# Добавляем пути для поиска хедеров
-include_directories("/home/bonus85/emsdk/emscripten/incoming/system/include")
-include_directories(${MODULE_DIR}/include)
-include_directories(${MODULE_DIR}/modules/sway.module_core/include)
-include_directories(${MODULE_DIR}/modules/sway.module_webcore/include)
+#--------------------------------------------------------------------------------
+# Executable output path
+#--------------------------------------------------------------------------------
 
-# Получаем пути ко всем хедерам и исходникам библиотеки
-file(GLOB_RECURSE MODULE_HEADERS ${MODULE_DIR}/include/*.*)
-file(GLOB_RECURSE MODULE_SOURCES ${MODULE_DIR}/src/*.*)
+set_output_dir(${MODULE_WEBCORE_MVC_BIN_DIR})
 
-# Добавляем в проект цель для сборки статической библиотеки
-add_library(${META_LIB_NAME} STATIC ${MODULE_SOURCES})
-set_target_properties(${META_LIB_NAME} PROPERTIES OUTPUT_NAME ${META_PROJECT_NAME})
-set_target_properties(${META_LIB_NAME} PROPERTIES PREFIX "")
-set_target_properties(${META_LIB_NAME} PROPERTIES SUFFIX ".a.${META_VERSION}")
+#--------------------------------------------------------------------------------
+# Include directories
+#--------------------------------------------------------------------------------
 
-target_link_libraries(${META_LIB_NAME} libmodule_webcore)
+include_directories("${MODULE_WEBCORE_MVC_LIST_DIR}/submodules/sway.module_core/lib/cxx/include")
+include_directories("${MODULE_WEBCORE_MVC_LIST_DIR}/submodules/sway.module_webcore/lib/include")
+
+#--------------------------------------------------------------------------------
+# Library
+#--------------------------------------------------------------------------------
+
+add_subdirectory(lib)
+
+# set(CMAKE_CXX_STANDARD 11)
+# set(CMAKE_CXX_COMPILER "emcc")
+
+# # Добавляем пути для поиска хедеров
+# include_directories("/home/apriori85/emsdk/emscripten/incoming/system/include")
+# include_directories(${MODULE_WEBCORE_MVC_LIST_DIR}/lib/include)
+# include_directories(${MODULE_WEBCORE_MVC_LIST_DIR}/submodules/sway.module_core/lib/include)
+# include_directories(${MODULE_WEBCORE_MVC_LIST_DIR}/submodules/sway.module_webcore/lib/include)
+
+# # Получаем пути ко всем хедерам и исходникам библиотеки
+# file(GLOB_RECURSE MODULE_HEADERS ${MODULE_WEBCORE_MVC_LIST_DIR}/lib/include/*.*)
+# file(GLOB_RECURSE MODULE_SOURCES ${MODULE_WEBCORE_MVC_LIST_DIR}/lib/src/*.*)
+
+# # Добавляем в проект цель для сборки статической библиотеки
+# add_library(${META_LIB_NAME} STATIC ${MODULE_SOURCES})
+# set_target_properties(${META_LIB_NAME} PROPERTIES OUTPUT_NAME ${META_PROJECT_NAME})
+# set_target_properties(${META_LIB_NAME} PROPERTIES PREFIX "")
+# set_target_properties(${META_LIB_NAME} PROPERTIES SUFFIX ".a.${META_VERSION}")
+
+# target_link_libraries(${META_LIB_NAME} libmodule_webcore)

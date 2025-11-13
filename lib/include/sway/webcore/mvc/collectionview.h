@@ -3,11 +3,17 @@
 
 #include <sway/webcore/mvc/collectionmodel.h>
 #include <sway/webcore/mvc/view.h>
-#include <sway/webcore/prereqs.h>
+#include <sway/webcore/prereqs.hpp>
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(webcore)
-NAMESPACE_BEGIN(mvc)
+#ifdef EMSCRIPTEN_PLATFORM
+#  include <emscripten/emscripten.h>
+#  include <emscripten/val.h>
+#  ifdef EMSCRIPTEN_USE_BINDINGS
+#    include <emscripten/bind.h>
+#  endif
+#endif
+
+namespace sway::webcore::mvc {
 
 /*!
  * \brief
@@ -36,9 +42,9 @@ public:
 	 * \param[in] options
 	 *    Опции представления.
 	 */
-	ACollectionView(core::containers::HierarchyNodePtr_t parent,
-		//const core::containers::HierarchyNodeIndex & nodeIndex,
-		const std::string & nodeId, const TreeNodeElementCreateInfo & createInfo);
+	ACollectionView(core::NodePtr_t parent,
+		//const core::NodeIndex & nodeIndex,
+		const std::string & nodeId, const TreeNodeElementDescriptor & createInfo);
 
 	/*!
 	 * \brief
@@ -50,15 +56,16 @@ public:
 
 	void makeItem(u32_t index, TreeNodeElement * child);
 
-#pragma region "IVisitable > HierarchyNode > TreeNodeElement > AView implementation"
+#pragma region "Visitable > HierarchyNode > TreeNodeElement > AView implementation"
 
-	virtual void accept(ITreeVisitor * visitor) override;
+	// virtual void accept(ITreeVisitor * visitor) override;
+	 virtual auto traverse(core::typedefs::TraverserPtr_t traverser) -> u32_t override;
 
 #pragma endregion
 
 	virtual void initialize();
 
-#pragma region "IObserver > AView implementation"
+#pragma region "Observer > AView implementation"
 
 	/*!
 	 * \brief
@@ -74,11 +81,10 @@ public:
 	EMSCRIPTEN_WRAPPER(ACollectionViewWrapper)
 
 	void initialize();
+	
 	void update();
 };
 
-NAMESPACE_END(mvc)
-NAMESPACE_END(webcore)
-NAMESPACE_END(sway)
+} // namespace sway::webcore::mvc
 
 #endif // _SWAY_WEBCORE_MVC_COLLECTIONVIEW_H
