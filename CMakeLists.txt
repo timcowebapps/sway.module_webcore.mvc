@@ -85,7 +85,7 @@ include_directories("${MODULE_WEBCORE_MVC_LIST_DIR}/submodules/sway.module_webco
 # Library
 #--------------------------------------------------------------------------------
 
-add_subdirectory(lib)
+add_subdirectory(lib/cxx)
 
 # set(CMAKE_CXX_STANDARD 11)
 # set(CMAKE_CXX_COMPILER "emcc")
