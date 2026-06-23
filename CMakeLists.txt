@@ -79,7 +79,7 @@ set_output_dir(${MODULE_WEBCORE_MVC_BIN_DIR})
 #--------------------------------------------------------------------------------
 
 include_directories("${MODULE_WEBCORE_MVC_LIST_DIR}/submodules/sway.module_core/lib/cxx/include")
-include_directories("${MODULE_WEBCORE_MVC_LIST_DIR}/submodules/sway.module_webcore/lib/include")
+include_directories("${MODULE_WEBCORE_MVC_LIST_DIR}/submodules/sway.module_webcore/lib/cxx/include")
 
 #--------------------------------------------------------------------------------
 # Library

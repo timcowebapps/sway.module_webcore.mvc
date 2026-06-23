@@ -2,50 +2,43 @@
 
 namespace sway::webcore::mvc {
 
-void AItemModel::registerEmscriptenClass(lpcstr_t classname) {
-	emscripten::class_<AItemModel, emscripten::base<Observable>>(classname)
-		.constructor()
-		.smart_ptr<ModelSmartPtr_t>(core::format("shared_ptr<%s>", classname).c_str())
-		.class_function("create", &AItemModel::create)
-		.function("setProperty", &AItemModel::setProperty)
-		.function("getProperty", &AItemModel::getProperty)
-		.function("setProperties", &AItemModel::setProperties)
-		.function("getProperties", &AItemModel::getProperties);
+EMSCRIPTEN_BINDING_BEGIN(AItemModel) {
+  emscripten::class_<AItemModel, emscripten::base<Observable>>("AItemModel")
+      .constructor()
+      .smart_ptr<ModelSmartPtr_t>("AItemModelSmartPtr")
+      .class_function("create", &AItemModel::create)
+      .function("setProperty", &AItemModel::setProperty)
+      .function("getProperty", &AItemModel::getProperty)
+      .function("setProperties", &AItemModel::setProperties)
+      .function("getProperties", &AItemModel::getProperties);
 }
+EMSCRIPTEN_BINDING_END()
 
-ModelSmartPtr_t AItemModel::create() {
-	return std::make_shared<AItemModel>();
-}
+ModelSmartPtr_t AItemModel::create() { return std::make_shared<AItemModel>(); }
 
 AItemModel::AItemModel(emscripten::val object)
-	: _properties(object) {
-	// Empty
+    : _properties(object) {
+  // Empty
 }
 
 AItemModel::AItemModel()
-	: _properties(emscripten::val::object()) {
-	// Empty
+    : _properties(emscripten::val::object()) {
+  // Empty
 }
 
 AItemModel::~AItemModel() {
-	// Empty
+  // Empty
 }
 
-emscripten::val AItemModel::getProperty(const std::string & key) const {
-	return _properties[key];
+emscripten::val AItemModel::getProperty(const std::string &key) const { return _properties[key]; }
+
+void AItemModel::setProperty(const std::string &key, const emscripten::val &value) {
+  _properties.set(key, value);
+  notify();
 }
 
-void AItemModel::setProperty(const std::string & key, const emscripten::val & value) {
-	_properties.set(key, value);
-	notify();
-}
+emscripten::val AItemModel::getProperties() const { return _properties; }
 
-emscripten::val AItemModel::getProperties() const {
-	return _properties;
-}
+void AItemModel::setProperties(emscripten::val value) { _properties = value; }
 
-void AItemModel::setProperties(emscripten::val value) {
-	_properties = value;
-}
-
-} // namespace sway::webcore::mvc
+}  // namespace sway::webcore::mvc
