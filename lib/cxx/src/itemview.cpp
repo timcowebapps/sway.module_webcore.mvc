@@ -1,6 +1,5 @@
+#include <sway/webcore/mvc/itemview.hpp>
 #include <sway/webcore/nodeelementupdater.hpp>
-
-#include <sway/webcore/mvc/itemview.h>
 
 namespace sway::webcore::mvc {
 

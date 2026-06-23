@@ -2,9 +2,8 @@
 #include <sway/webcore/css/selectors/cnselectorchain.hpp>
 #include <sway/webcore/css/selectors/cnselectordescriptor.hpp>
 #include <sway/webcore/css/selectors/idselector.hpp>
+#include <sway/webcore/mvc/view.hpp>
 #include <sway/webcore/nodeelementupdater.hpp>
-
-#include <sway/webcore/mvc/view.h>
 
 namespace sway::webcore::mvc {
 

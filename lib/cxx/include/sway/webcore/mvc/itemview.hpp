@@ -1,10 +1,9 @@
 #ifndef _SWAY_WEBCORE_MVC_ITEMVIEW_H
 #define _SWAY_WEBCORE_MVC_ITEMVIEW_H
 
+#include <sway/webcore/mvc/view.hpp>
 #include <sway/webcore/prereqs.hpp>
 #include <sway/webcore/treenodeelement.hpp>
-
-#include <sway/webcore/mvc/view.h>
 
 namespace sway::webcore::mvc {
 

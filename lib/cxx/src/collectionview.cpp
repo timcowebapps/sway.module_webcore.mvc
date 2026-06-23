@@ -1,8 +1,7 @@
+#include <sway/webcore/mvc/collectionview.hpp>
+#include <sway/webcore/mvc/itemmodel.hpp>
+#include <sway/webcore/mvc/itemview.hpp>
 #include <sway/webcore/nodeelementupdater.hpp>
-
-#include <sway/webcore/mvc/collectionview.h>
-#include <sway/webcore/mvc/itemmodel.h>
-#include <sway/webcore/mvc/itemview.h>
 
 namespace sway::webcore::mvc {
 

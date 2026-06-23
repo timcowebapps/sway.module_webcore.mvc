@@ -1,8 +1,8 @@
 #ifndef _SWAY_WEBCORE_MVC_COLLECTIONMODEL_H
 #define _SWAY_WEBCORE_MVC_COLLECTIONMODEL_H
 
-#include <sway/webcore.h>
-#include <sway/webcore/mvc/itemmodel.h>
+#include <sway/webcore.hpp>
+#include <sway/webcore/mvc/itemmodel.hpp>
 
 namespace sway::webcore::mvc {
 

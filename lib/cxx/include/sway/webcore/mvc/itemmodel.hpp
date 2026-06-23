@@ -1,7 +1,7 @@
 #ifndef _SWAY_WEBCORE_MVC_ITEMMODEL_H
 #define _SWAY_WEBCORE_MVC_ITEMMODEL_H
 
-#include <sway/webcore.h>
+#include <sway/webcore.hpp>
 
 namespace sway::webcore::mvc {
 

@@ -1,6 +1,5 @@
+#include <sway/webcore/mvc/view/advanced/stackview.hpp>
 #include <sway/webcore/nodeelementupdater.hpp>
-
-#include <sway/webcore/mvc/view/advanced/stackview.h>
 
 namespace sway::webcore::mvc {
 

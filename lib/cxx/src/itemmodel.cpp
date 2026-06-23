@@ -1,4 +1,4 @@
-#include <sway/webcore/mvc/itemmodel.h>
+#include <sway/webcore/mvc/itemmodel.hpp>
 
 namespace sway::webcore::mvc {
 

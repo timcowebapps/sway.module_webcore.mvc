@@ -1,9 +1,8 @@
 #ifndef _SWAY_WEBCORE_MVC_CONTROLLER_H
 #define _SWAY_WEBCORE_MVC_CONTROLLER_H
 
+#include <sway/webcore/mvc/itemmodel.hpp>
 #include <sway/webcore/prereqs.hpp>
-
-#include <sway/webcore/mvc/itemmodel.h>
 
 namespace sway::webcore::mvc {
 

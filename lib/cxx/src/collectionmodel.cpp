@@ -1,5 +1,5 @@
-#include <sway/webcore/mvc/collectionmodel.h>
-#include <sway/webcore/mvc/itemmodel.h>
+#include <sway/webcore/mvc/collectionmodel.hpp>
+#include <sway/webcore/mvc/itemmodel.hpp>
 
 namespace sway::webcore::mvc {
 

@@ -1,10 +1,9 @@
 #ifndef _SWAY_WEBCORE_MVC_COLLECTIONVIEW_H
 #define _SWAY_WEBCORE_MVC_COLLECTIONVIEW_H
 
+#include <sway/webcore/mvc/collectionmodel.hpp>
+#include <sway/webcore/mvc/view.hpp>
 #include <sway/webcore/prereqs.hpp>
-
-#include <sway/webcore/mvc/collectionmodel.h>
-#include <sway/webcore/mvc/view.h>
 
 #ifdef EMSCRIPTEN_PLATFORM
 #  include <emscripten/emscripten.h>
